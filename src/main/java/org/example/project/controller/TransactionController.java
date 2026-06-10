@@ -28,8 +28,11 @@ public class TransactionController {
     public ResponseEntity<?> transfer(@RequestParam String targetAccountNumber,
                                       @RequestParam BigDecimal amount,
                                       Principal principal) {
-        // Giả sử lấy account của user hiện tại (cần cải tiến sau với UserDetails)
-        Account source = accountRepository.findByUserId(1L).orElseThrow(); // tạm thời
+
+        //Cải tiến sau khi có UserDetails để lấy account của user hiện tại
+        Account source = accountRepository.findByUserId(1L)
+                .orElseThrow(() -> new RuntimeException("Source account not found"));
+
         Account target = accountRepository.findByAccountNumber(targetAccountNumber)
                 .orElseThrow(() -> new RuntimeException("Target account not found"));
 
