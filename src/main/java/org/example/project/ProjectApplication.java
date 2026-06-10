@@ -8,7 +8,7 @@ import org.springframework.scheduling.annotation.EnableAsync;
 @SpringBootApplication
 @EnableAsync
 @EnableAspectJAutoProxy  // ← Thêm dòng này
-public class ProjectApplication {   // hoặc RikkeiBankApplication
+public class ProjectApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(ProjectApplication.class, args);

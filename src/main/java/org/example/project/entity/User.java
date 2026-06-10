@@ -2,6 +2,7 @@ package org.example.project.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.example.project.entity.enums.Role;
 
 import java.time.LocalDateTime;
 
@@ -12,6 +13,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class User {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -34,8 +36,4 @@ public class User {
     private Role role = Role.CUSTOMER;
 
     private LocalDateTime createdAt = LocalDateTime.now();
-}
-
-enum Role {
-    ADMIN, STAFF, CUSTOMER
 }

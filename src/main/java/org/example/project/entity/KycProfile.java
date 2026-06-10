@@ -2,6 +2,7 @@ package org.example.project.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.example.project.entity.enums.KycStatus;
 
 import java.time.LocalDateTime;
 
@@ -12,6 +13,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class KycProfile {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -21,6 +23,9 @@ public class KycProfile {
     private User user;
 
     private String documentUrl;
-    private String status = "PENDING"; // PENDING, CONFIRM, REJECT
+
+    @Enumerated(EnumType.STRING)
+    private KycStatus status = KycStatus.PENDING;
+
     private LocalDateTime createdAt = LocalDateTime.now();
 }

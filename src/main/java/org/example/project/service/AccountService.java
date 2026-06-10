@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
-import java.util.Optional;
 
 @Service
 public class AccountService {
@@ -25,9 +24,5 @@ public class AccountService {
         account.setAccountNumber("ACC" + System.currentTimeMillis());
         account.setBalance(BigDecimal.ZERO);
         return accountRepository.save(account);
-    }
-
-    public Optional<Account> findByUserId(Long userId) {
-        return accountRepository.findByUserId(userId);
     }
 }

@@ -3,6 +3,7 @@ package org.example.project.controller;
 import org.example.project.dto.KycRequest;
 import org.example.project.entity.KycProfile;
 import org.example.project.entity.User;
+import org.example.project.entity.enums.KycStatus;
 import org.example.project.repository.KycProfileRepository;
 import org.example.project.repository.UserRepository;
 import org.springframework.http.ResponseEntity;
@@ -39,7 +40,7 @@ public class KycController {
         KycProfile kyc = new KycProfile();
         kyc.setUser(user);
         kyc.setDocumentUrl("/uploads/" + fileName);
-        kyc.setStatus("PENDING");
+        kyc.setStatus(KycStatus.PENDING);
         kycProfileRepository.save(kyc);
 
         return ResponseEntity.ok("KYC uploaded successfully. Status: PENDING");
