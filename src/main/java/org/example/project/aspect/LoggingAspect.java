@@ -13,35 +13,30 @@ import java.time.LocalDateTime;
 @Component
 public class LoggingAspect {
 
-    // Log thời gian thực hiện cho tất cả controller methods
+    // Log thời gian thực hiện cho tất cả controller
     @Around("execution(* org.example.project.controller..*(..))")
     public Object logExecutionTime(ProceedingJoinPoint joinPoint) throws Throwable {
-        String methodName = joinPoint.getSignature().toShortString();
+        String methodName = joinPoint.getSignature().getName();
         long startTime = System.currentTimeMillis();
 
-        log.info("[START] {} - Time: {}", methodName, LocalDateTime.now());
-
-        Object result;
-        try {
-            result = joinPoint.proceed();
-            long executionTime = System.currentTimeMillis() - startTime;
-            log.info("[END] {} - Execution time: {} ms - Time: {}", methodName, executionTime, LocalDateTime.now());
-            return result;
-        } catch (Exception e) {
-            long executionTime = System.currentTimeMillis() - startTime;
-            log.error("[ERROR] {} - Execution time: {} ms - Error: {}", methodName, executionTime, e.getMessage());
-            throw e;
-        }
-    }
-
-    // Audit Log đặc biệt cho chuyển tiền (theo yêu cầu SRS)
-    @Around("execution(* org.example.project.controller.TransactionController.transfer(..))")
-    public Object auditTransfer(ProceedingJoinPoint joinPoint) throws Throwable {
-        log.info("[AUDIT] Bắt đầu giao dịch chuyển tiền lúc: {}", LocalDateTime.now());
+        log.info("[START] {}", methodName);
 
         Object result = joinPoint.proceed();
 
-        log.info("[AUDIT] Giao dịch chuyển tiền HOÀN TẤT thành công lúc: {}", LocalDateTime.now());
+        long executionTime = System.currentTimeMillis() - startTime;
+        log.info("[END] {} - Execution time: {} ms", methodName, executionTime);
+
+        return result;
+    }
+
+    // Audit Log cho chuyển tiền
+    @Around("execution(* org.example.project.controller.TransactionController.transfer(..))")
+    public Object auditTransfer(ProceedingJoinPoint joinPoint) throws Throwable {
+        log.info("[AUDIT] Chuyển tiền bắt đầu lúc: {}", LocalDateTime.now());
+
+        Object result = joinPoint.proceed();
+
+        log.info("[AUDIT] Chuyển tiền HOÀN TẤT lúc: {}", LocalDateTime.now());
         return result;
     }
 }
